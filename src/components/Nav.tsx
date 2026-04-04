@@ -15,6 +15,9 @@ export default function Nav() {
         <Link href="/create" className="text-zinc-300 hover:text-white">
           Create
         </Link>
+        <Link href="/promo" className="text-zinc-300 hover:text-white">
+          Promo
+        </Link>
         {session ? (
           <>
             <Link href="/gallery" className="text-zinc-300 hover:text-white">

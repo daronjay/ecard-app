@@ -1,0 +1,189 @@
+export interface PromoFeature {
+  id: string;
+  headline: string;
+  description: string;
+  benefitStatement: string;
+  ctaText: string;
+  // visual hint for the feature card (gradient or icon-like element)
+  accent: string;
+}
+
+export interface SocialPost {
+  id: string;
+  platform: "facebook" | "instagram";
+  caption: string;
+  hashtags?: string[];
+  imageDescription: string;
+  format?: "post" | "reel" | "carousel";
+}
+
+export const promoFeatures: PromoFeature[] = [
+  {
+    id: "card-editor",
+    headline: "Design Your Card in Real Time",
+    description:
+      "Watch your card come to life as you build it. Every change you make appears instantly in a live preview -- no guessing, no waiting.",
+    benefitStatement:
+      "So you always know exactly what you're sending before you send it.",
+    ctaText: "Start Creating",
+    accent: "from-blue-500 to-purple-600",
+  },
+  {
+    id: "photo-upload",
+    headline: "Make It Personal with Your Photos",
+    description:
+      "Drop in your favourite photo and it appears right on your card. Drag and drop or click to upload -- your photo, centred and styled with a subtle shadow.",
+    benefitStatement:
+      "Because the best cards have a story only your photos can tell.",
+    ctaText: "Upload a Photo",
+    accent: "from-pink-500 to-rose-600",
+  },
+  {
+    id: "background-templates",
+    headline: "Pick the Perfect Mood",
+    description:
+      "Choose from beautiful backgrounds -- warm sunset gradients, deep ocean tones, elegant midnight, or festive confetti. One click to completely change the feel.",
+    benefitStatement:
+      "So your card matches the moment, whether it's romantic, celebratory, or heartfelt.",
+    ctaText: "Browse Templates",
+    accent: "from-amber-500 to-orange-600",
+  },
+  {
+    id: "text-personalisation",
+    headline: "Say Exactly What You Mean",
+    description:
+      "Add names, dates, and a heartfelt message. Position your text just right with a simple slider. Every word shows up on the card as you type.",
+    benefitStatement:
+      "Because the right words in the right place make all the difference.",
+    ctaText: "Add Your Message",
+    accent: "from-emerald-500 to-teal-600",
+  },
+  {
+    id: "download-png",
+    headline: "Download and Keep Forever",
+    description:
+      "Export your card as a crisp, high-quality PNG image. Print it, email it, text it -- it's yours to use however you want.",
+    benefitStatement:
+      "So your card lives beyond the screen and goes wherever you need it.",
+    ctaText: "Download Free",
+    accent: "from-cyan-500 to-blue-600",
+  },
+  {
+    id: "save-and-share",
+    headline: "Share with a Single Link",
+    description:
+      "Save your card and get a unique link anyone can open. No account needed for the person receiving it -- just send the link and they see your card.",
+    benefitStatement:
+      "Because sharing something meaningful shouldn't be complicated.",
+    ctaText: "Save & Share",
+    accent: "from-violet-500 to-indigo-600",
+  },
+  {
+    id: "personal-gallery",
+    headline: "All Your Cards in One Place",
+    description:
+      "Sign up to keep a personal gallery of every card you've made. Come back anytime to re-download, re-share, or just reminisce.",
+    benefitStatement: "So you never lose a card or the memory behind it.",
+    ctaText: "View Gallery",
+    accent: "from-fuchsia-500 to-pink-600",
+  },
+];
+
+export const socialPosts: SocialPost[] = [
+  // Facebook
+  {
+    id: "fb-1",
+    platform: "facebook",
+    caption: `Birthdays, anniversaries, just-because moments -- they all deserve more than a text message.
+
+eCard lets you design a beautiful card in seconds. Pick a background, upload your photo, write your message, and share it with a link. No app to download, no account needed for the person receiving it.
+
+The best part? You see exactly what it looks like as you build it. Try it out -- link in comments.`,
+    imageDescription:
+      "Screen recording GIF showing the create page: user types a name, the card preview updates in real time. Ends with the finished card.",
+  },
+  {
+    id: "fb-2",
+    platform: "facebook",
+    caption: `Made this for my friend's birthday in about 2 minutes.
+
+Uploaded our favourite photo, picked the sunset background, typed a quick message, and downloaded it as a PNG. Sent it over WhatsApp and she loved it.
+
+If you've ever wanted to send something more personal than an emoji but less effort than actual craft supplies, this is it.`,
+    imageDescription:
+      "A finished eCard with a photo, sunset gradient background, personal message, and sender name. Looks warm and polished.",
+  },
+  {
+    id: "fb-3",
+    platform: "facebook",
+    caption: `New feature drop: your personal card gallery.
+
+Sign up (takes 10 seconds) and every card you make gets saved. Come back anytime to re-download or share again. Handy when someone asks "can you send me that card again?" three weeks later.
+
+Still free, still no ads, still just a nice way to send cards.`,
+    imageDescription:
+      "Screenshot of the gallery page showing a grid of 4-5 different saved cards with various templates and photos.",
+  },
+  // Instagram
+  {
+    id: "ig-1",
+    platform: "instagram",
+    caption: `Stop sending boring birthday texts.
+
+Design a real card in under a minute -- pick a background, add your photo, write something meaningful. Download it or share with a link.
+
+Your recipient doesn't need an account. Just the link and a smile.`,
+    hashtags: [
+      "#ecard",
+      "#digitalcard",
+      "#birthdaycard",
+      "#personalised",
+      "#sendlove",
+      "#carddesign",
+      "#diy",
+    ],
+    imageDescription:
+      "Carousel of 3 slides: (1) The empty editor with template options, (2) A card being built with a photo and text, (3) The finished card looking polished and ready to share.",
+    format: "carousel",
+  },
+  {
+    id: "ig-2",
+    platform: "instagram",
+    caption: `That moment when the preview updates in real time and you know it's perfect.
+
+No templates that look like everyone else's. Your photo. Your words. Your card.`,
+    hashtags: [
+      "#ecard",
+      "#handmade",
+      "#personalisedgifts",
+      "#creativecards",
+      "#makeityours",
+    ],
+    imageDescription:
+      "Short reel: screen recording of someone building a card. Fast-forward through picking a template, uploading a photo, typing a message. Slow down at the 'Download PNG' click. End with the downloaded card file opening.",
+    format: "reel",
+  },
+  {
+    id: "ig-3",
+    platform: "instagram",
+    caption: `Four moods. One card maker. Which background are you today?
+
+1. Sunset -- warm and romantic
+2. Ocean -- cool and calming
+3. Midnight -- sleek and elegant
+4. Confetti -- party time
+
+Swipe to see them all. Then go make one.`,
+    hashtags: [
+      "#ecard",
+      "#cardmaker",
+      "#aesthetics",
+      "#gradients",
+      "#moodboard",
+      "#celebration",
+    ],
+    imageDescription:
+      "Carousel of 4 slides, each showing the same card content (a sample photo + 'Happy Birthday!') but with each of the 4 different background templates. Sunset, Ocean, Midnight, Confetti.",
+    format: "carousel",
+  },
+];
