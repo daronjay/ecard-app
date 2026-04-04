@@ -37,4 +37,5 @@ next-env.d.ts
 
 # app data
 ecard.db
-public/uploads/
+public/uploads/*
+!public/uploads/.gitkeep
