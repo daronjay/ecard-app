@@ -42,11 +42,21 @@ export const promoFeatures: PromoFeature[] = [
     id: "background-templates",
     headline: "Pick the Perfect Mood",
     description:
-      "Choose from beautiful backgrounds -- warm sunset gradients, deep ocean tones, elegant midnight, or festive confetti. One click to completely change the feel.",
+      "Choose from beautiful backgrounds -- warm sunset gradients, deep ocean tones, elegant midnight, or festive confetti. One click to completely change the feel. Toggle animated mode to bring your background to life with smooth motion.",
     benefitStatement:
-      "So your card matches the moment, whether it's romantic, celebratory, or heartfelt.",
+      "So your card matches the moment, whether it's romantic, celebratory, or heartfelt -- static or animated.",
     ctaText: "Browse Templates",
     accent: "from-amber-500 to-orange-600",
+  },
+  {
+    id: "animated-backgrounds",
+    headline: "Backgrounds That Move",
+    description:
+      "Flip the animated switch and watch your card come alive. Sunset gradients shift, ocean hues pulse, midnight glows, and confetti drifts. Each template has its own animation style -- all pure CSS, no plugins.",
+    benefitStatement:
+      "Because a card that moves catches the eye in a way a static image never will.",
+    ctaText: "Try Animated",
+    accent: "from-red-500 to-amber-600",
   },
   {
     id: "text-personalisation",
@@ -124,6 +134,17 @@ Still free, still no ads, still just a nice way to send cards.`,
     imageDescription:
       "Screenshot of the gallery page showing a grid of 4-5 different saved cards with various templates and photos.",
   },
+  {
+    id: "fb-4",
+    platform: "facebook",
+    caption: `The eCard editor just got animated backgrounds.
+
+Pick any template -- Sunset, Ocean, Midnight, Confetti -- and toggle animation on. The gradients shift, the colours pulse, the confetti drifts. It's all CSS, so it runs smooth on any device.
+
+Still a one-click thing. Pick your background, flip the switch, done. Your card now moves. Try it out.`,
+    imageDescription:
+      "Short screen recording showing the template picker with the 'Animated background' checkbox being toggled on. The card preview background visibly animates -- gradient shifting for Sunset, pulsing for Ocean.",
+  },
   // Instagram
   {
     id: "ig-1",
@@ -173,7 +194,7 @@ No templates that look like everyone else's. Your photo. Your words. Your card.`
 3. Midnight -- sleek and elegant
 4. Confetti -- party time
 
-Swipe to see them all. Then go make one.`,
+Swipe to see them all. Now with animated mode -- each one moves.`,
     hashtags: [
       "#ecard",
       "#cardmaker",
@@ -183,7 +204,27 @@ Swipe to see them all. Then go make one.`,
       "#celebration",
     ],
     imageDescription:
-      "Carousel of 4 slides, each showing the same card content (a sample photo + 'Happy Birthday!') but with each of the 4 different background templates. Sunset, Ocean, Midnight, Confetti.",
+      "Carousel of 4 slides, each showing the same card content (a sample photo + 'Happy Birthday!') but with each of the 4 different background templates. Sunset, Ocean, Midnight, Confetti. Last slide shows the animated toggle.",
     format: "carousel",
+  },
+  {
+    id: "ig-4",
+    platform: "instagram",
+    caption: `Static cards are fine. Animated cards are better.
+
+One toggle. Your background starts moving -- gradients shift, colours pulse, confetti drifts. Every template has its own animation.
+
+No app needed. No plugins. Just flick the switch.`,
+    hashtags: [
+      "#ecard",
+      "#animatedcard",
+      "#digitalcard",
+      "#carddesign",
+      "#cssanimation",
+      "#motiondesign",
+    ],
+    imageDescription:
+      "Short reel: screen recording switching between each template with animation enabled. Show the Sunset gradient shifting, the Midnight glow pulsing, the Confetti dots drifting. End on a finished animated card.",
+    format: "reel",
   },
 ];

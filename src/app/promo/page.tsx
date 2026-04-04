@@ -86,7 +86,7 @@ export default function PromoPage() {
             {
               step: "1",
               title: "Pick a background",
-              desc: "Choose from Sunset, Ocean, Midnight, or Confetti",
+              desc: "Choose from Sunset, Ocean, Midnight, or Confetti -- with optional animation",
             },
             {
               step: "2",
