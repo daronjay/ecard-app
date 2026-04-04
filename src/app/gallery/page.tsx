@@ -8,7 +8,7 @@ import CardPreview from "@/components/CardPreview";
 import { CardData, defaultTextConfig } from "@/lib/types";
 
 export default function GalleryPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
