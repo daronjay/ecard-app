@@ -5,3 +5,70 @@
 body {
   @apply bg-zinc-950 text-zinc-100;
 }
+
+/* animated background keyframes */
+@keyframes bg-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes bg-pulse {
+  0%,
+  100% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    filter: hue-rotate(30deg) brightness(1.1);
+  }
+}
+
+@keyframes bg-glow {
+  0%,
+  100% {
+    box-shadow: inset 0 0 60px rgba(100, 100, 255, 0.1);
+  }
+  50% {
+    box-shadow: inset 0 0 120px rgba(150, 100, 255, 0.3);
+  }
+}
+
+@keyframes confetti-drift {
+  0% {
+    background-position:
+      0 0,
+      15px 15px,
+      7px 7px,
+      0 0;
+  }
+  100% {
+    background-position:
+      30px 30px,
+      55px 55px,
+      32px 32px,
+      0 0;
+  }
+}
+
+.anim-shift {
+  background-size: 200% 200% !important;
+  animation: bg-shift 6s ease-in-out infinite;
+}
+
+.anim-pulse {
+  animation: bg-pulse 4s ease-in-out infinite;
+}
+
+.anim-glow {
+  animation: bg-glow 3s ease-in-out infinite;
+}
+
+.anim-confetti {
+  animation: confetti-drift 8s linear infinite;
+}

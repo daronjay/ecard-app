@@ -59,6 +59,7 @@ export default function GalleryPage() {
                   template={card.template}
                   photoUrl={card.photoUrl}
                   textConfig={card.textConfig || defaultTextConfig}
+                  animated={card.animated}
                 />
                 <p className="text-xs text-zinc-500 mt-1">{card.createdAt}</p>
               </div>

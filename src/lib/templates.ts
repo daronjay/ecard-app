@@ -5,26 +5,32 @@ export interface Template {
   background: string;
   // text color that works on this bg
   textColor: string;
+  // css class for animation - only applied when animated mode is on
+  animClass?: string;
 }
 
 export const templates: Template[] = [
   {
     id: "gradient-sunset",
     name: "Sunset",
-    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #f093fb 100%)",
+    background:
+      "linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #f093fb 100%)",
     textColor: "#fff",
+    animClass: "anim-shift",
   },
   {
     id: "gradient-ocean",
     name: "Ocean",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     textColor: "#fff",
+    animClass: "anim-pulse",
   },
   {
     id: "solid-dark",
     name: "Midnight",
     background: "#1a1a2e",
     textColor: "#e0e0ff",
+    animClass: "anim-glow",
   },
   {
     id: "pattern-dots",
@@ -37,6 +43,7 @@ export const templates: Template[] = [
       linear-gradient(135deg, #2d1b69 0%, #11998e 100%)
     `.trim(),
     textColor: "#fff",
+    animClass: "anim-confetti",
   },
 ];
 
@@ -63,4 +70,9 @@ export function getTemplateStyles(templateId: string): React.CSSProperties {
 
 export function getTemplate(id: string): Template | undefined {
   return templates.find((t) => t.id === id);
+}
+
+export function getAnimClass(templateId: string): string {
+  const t = templates.find((t) => t.id === templateId);
+  return t?.animClass || "";
 }

@@ -12,6 +12,7 @@ export interface CardData {
   userId: string | null;
   photoUrl: string | null;
   template: string;
+  animated: boolean;
   textConfig: TextConfig;
   createdAt: string;
 }

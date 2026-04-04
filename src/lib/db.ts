@@ -34,6 +34,14 @@ function migrate(db: Database.Database) {
       FOREIGN KEY (user_id) REFERENCES users(id)
     );
   `);
+
+  // add animated column if it doesn't exist yet
+  const cols = db.prepare("PRAGMA table_info(cards)").all() as Array<{
+    name: string;
+  }>;
+  if (!cols.some((c) => c.name === "animated")) {
+    db.exec("ALTER TABLE cards ADD COLUMN animated INTEGER NOT NULL DEFAULT 0");
+  }
 }
 
 export default getDb;

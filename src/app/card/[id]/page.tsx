@@ -64,6 +64,7 @@ export default function CardPage() {
         template={card.template}
         photoUrl={card.photoUrl}
         textConfig={card.textConfig || defaultTextConfig}
+        animated={card.animated}
       />
       <div className="flex gap-3 mt-4">
         <button

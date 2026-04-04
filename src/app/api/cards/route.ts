@@ -14,13 +14,14 @@ export async function POST(req: NextRequest) {
 
   const db = getDb();
   db.prepare(
-    "INSERT INTO cards (id, user_id, photo_url, template, text_config) VALUES (?, ?, ?, ?, ?)"
+    "INSERT INTO cards (id, user_id, photo_url, template, text_config, animated) VALUES (?, ?, ?, ?, ?, ?)",
   ).run(
     id,
     userId,
     body.photoUrl || null,
     body.template || "gradient-sunset",
-    JSON.stringify(body.textConfig || {})
+    JSON.stringify(body.textConfig || {}),
+    body.animated ? 1 : 0,
   );
 
   return NextResponse.json({ id }, { status: 201 });
@@ -43,6 +44,7 @@ export async function GET() {
     photo_url: string | null;
     template: string;
     text_config: string;
+    animated: number;
     created_at: string;
   }>;
 
@@ -51,6 +53,7 @@ export async function GET() {
     userId: r.user_id,
     photoUrl: r.photo_url,
     template: r.template,
+    animated: !!r.animated,
     textConfig: JSON.parse(r.text_config),
     createdAt: r.created_at,
   }));

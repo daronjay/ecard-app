@@ -4,7 +4,7 @@ import { CardData } from "@/lib/types";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const db = getDb();
   const row = db.prepare("SELECT * FROM cards WHERE id = ?").get(params.id) as
@@ -14,6 +14,7 @@ export async function GET(
         photo_url: string | null;
         template: string;
         text_config: string;
+        animated: number;
         created_at: string;
       }
     | undefined;
@@ -27,6 +28,7 @@ export async function GET(
     userId: row.user_id,
     photoUrl: row.photo_url,
     template: row.template,
+    animated: !!row.animated,
     textConfig: JSON.parse(row.text_config),
     createdAt: row.created_at,
   };

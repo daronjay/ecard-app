@@ -2,23 +2,25 @@
 
 import { forwardRef } from "react";
 import { TextConfig } from "@/lib/types";
-import { getTemplateStyles } from "@/lib/templates";
+import { getTemplateStyles, getAnimClass } from "@/lib/templates";
 
 interface Props {
   template: string;
   photoUrl: string | null;
   textConfig: TextConfig;
+  animated?: boolean;
 }
 
 // forwardRef so parent can grab the DOM node for html2canvas
 const CardPreview = forwardRef<HTMLDivElement, Props>(
-  ({ template, photoUrl, textConfig }, ref) => {
+  ({ template, photoUrl, textConfig, animated }, ref) => {
     const styles = getTemplateStyles(template);
+    const animCls = animated ? getAnimClass(template) : "";
 
     return (
       <div
         ref={ref}
-        className="relative w-full aspect-[4/3] rounded-xl overflow-hidden select-none"
+        className={`relative w-full aspect-[4/3] rounded-xl overflow-hidden select-none ${animCls}`}
         style={styles}
       >
         {/* photo layer */}
@@ -50,7 +52,9 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
             className="absolute left-0 right-0 text-center px-8"
             style={{ top: `${textConfig.messageY}%` }}
           >
-            <p className="text-lg italic drop-shadow-lg">{textConfig.message}</p>
+            <p className="text-lg italic drop-shadow-lg">
+              {textConfig.message}
+            </p>
           </div>
         )}
 
@@ -69,7 +73,7 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 CardPreview.displayName = "CardPreview";

@@ -14,6 +14,7 @@ export default function CreatePage() {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [template, setTemplate] = useState("gradient-sunset");
+  const [animated, setAnimated] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [textConfig, setTextConfig] = useState<TextConfig>({
     ...defaultTextConfig,
@@ -39,7 +40,7 @@ export default function CreatePage() {
     const res = await fetch("/api/cards", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ photoUrl, template, textConfig }),
+      body: JSON.stringify({ photoUrl, template, textConfig, animated }),
     });
     const data = await res.json();
     setSaving(false);
@@ -62,7 +63,12 @@ export default function CreatePage() {
             <h2 className="text-sm font-medium text-zinc-400 mb-2">
               Background
             </h2>
-            <TemplatePicker selected={template} onSelect={setTemplate} />
+            <TemplatePicker
+              selected={template}
+              onSelect={setTemplate}
+              animated={animated}
+              onToggleAnimated={setAnimated}
+            />
           </section>
 
           <section>
@@ -95,6 +101,7 @@ export default function CreatePage() {
             template={template}
             photoUrl={photoUrl}
             textConfig={textConfig}
+            animated={animated}
           />
         </div>
       </div>
