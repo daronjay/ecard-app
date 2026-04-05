@@ -33,12 +33,12 @@ export default function TemplatePicker({
           </button>
         ))}
       </div>
-      <label className="flex items-center gap-2 text-sm text-zinc-400 cursor-pointer select-none">
+      <label className="flex items-center gap-2 text-sm text-stone-500 cursor-pointer select-none">
         <input
           type="checkbox"
           checked={animated}
           onChange={(e) => onToggleAnimated(e.target.checked)}
-          className="rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-blue-500"
+          className="rounded border-stone-300 bg-white text-blue-500 focus:ring-blue-500"
         />
         Animated background
       </label>

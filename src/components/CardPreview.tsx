@@ -9,18 +9,20 @@ interface Props {
   photoUrl: string | null;
   textConfig: TextConfig;
   animated?: boolean;
+  format?: "landscape" | "portrait";
 }
 
 // forwardRef so parent can grab the DOM node for html2canvas
 const CardPreview = forwardRef<HTMLDivElement, Props>(
-  ({ template, photoUrl, textConfig, animated }, ref) => {
+  ({ template, photoUrl, textConfig, animated, format = "landscape" }, ref) => {
     const styles = getTemplateStyles(template);
     const animCls = animated ? getAnimClass(template) : "";
+    const aspectClass = format === "portrait" ? "aspect-[3/4]" : "aspect-[4/3]";
 
     return (
       <div
         ref={ref}
-        className={`relative w-full aspect-[4/3] rounded-xl overflow-hidden select-none ${animCls}`}
+        className={`relative w-full ${aspectClass} rounded-xl overflow-hidden select-none ${animCls}`}
         style={styles}
       >
         {/* photo layer */}

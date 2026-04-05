@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply bg-zinc-950 text-zinc-100;
+  background: #f5f0eb;
+  color: #1c1917;
 }
 
 /* animated background keyframes */

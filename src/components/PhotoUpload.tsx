@@ -22,7 +22,7 @@ export default function PhotoUpload({ onUpload, currentUrl }: Props) {
       setUploading(false);
       if (data.url) onUpload(data.url);
     },
-    [onUpload]
+    [onUpload],
   );
 
   const onDrop = useCallback(
@@ -32,7 +32,7 @@ export default function PhotoUpload({ onUpload, currentUrl }: Props) {
       const file = e.dataTransfer.files[0];
       if (file) handleFile(file);
     },
-    [handleFile]
+    [handleFile],
   );
 
   return (
@@ -54,25 +54,27 @@ export default function PhotoUpload({ onUpload, currentUrl }: Props) {
         input.click();
       }}
       className={`
-        cursor-pointer border-2 border-dashed rounded-lg p-6 text-center transition-colors
-        ${dragging ? "border-blue-400 bg-blue-400/10" : "border-zinc-600 hover:border-zinc-400"}
-        ${currentUrl ? "py-3" : "py-12"}
+        cursor-pointer border-2 border-dashed rounded-xl text-center transition-colors
+        ${dragging ? "border-blue-400 bg-blue-50" : "border-stone-300 hover:border-stone-400 bg-stone-50"}
+        ${currentUrl ? "p-3" : "p-12"}
       `}
     >
       {uploading ? (
-        <p className="text-zinc-400">uploading...</p>
+        <p className="text-stone-400">uploading...</p>
       ) : currentUrl ? (
         <div className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={currentUrl}
             alt="uploaded"
-            className="w-16 h-16 object-cover rounded"
+            className="w-16 h-16 object-cover rounded-lg"
           />
-          <span className="text-zinc-400 text-sm">click or drop to replace</span>
+          <span className="text-stone-500 text-sm">
+            click or drop to replace
+          </span>
         </div>
       ) : (
-        <p className="text-zinc-400">drop a photo here or click to upload</p>
+        <p className="text-stone-400">drop a photo here or click to upload</p>
       )}
     </div>
   );

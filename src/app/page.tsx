@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
+import PromoContent from "@/components/PromoContent";
 
 export default function Home() {
-  // no landing page needed, just go to the editor
-  redirect("/create");
+  return <PromoContent />;
 }
