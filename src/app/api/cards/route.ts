@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { v4 as uuid } from "uuid";
 import getDb from "@/lib/db";
 import { authOptions } from "@/lib/auth";
-import { CardData } from "@/lib/types";
+import { CardData, defaultPhotoTransform } from "@/lib/types";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
   const db = getDb();
   db.prepare(
-    "INSERT INTO cards (id, user_id, photo_url, template, text_config, animated, format) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO cards (id, user_id, photo_url, template, text_config, animated, format, photo_transform) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   ).run(
     id,
     userId,
@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
     JSON.stringify(body.textConfig || {}),
     body.animated ? 1 : 0,
     body.format === "portrait" ? "portrait" : "landscape",
+    JSON.stringify(body.photoTransform || defaultPhotoTransform),
   );
 
   return NextResponse.json({ id }, { status: 201 });
@@ -47,6 +48,7 @@ export async function GET() {
     text_config: string;
     animated: number;
     format: string;
+    photo_transform: string;
     created_at: string;
   }>;
 
@@ -58,6 +60,7 @@ export async function GET() {
     animated: !!r.animated,
     format: (r.format as "landscape" | "portrait") || "landscape",
     textConfig: JSON.parse(r.text_config),
+    photoTransform: r.photo_transform ? JSON.parse(r.photo_transform) : defaultPhotoTransform,
     createdAt: r.created_at,
   }));
 

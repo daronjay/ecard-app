@@ -7,6 +7,19 @@ export interface TextConfig {
   messageY: number;
 }
 
+export interface PhotoTransform {
+  scale: number;
+  // offset in % of card dimensions, 0 = centered
+  x: number;
+  y: number;
+}
+
+export const defaultPhotoTransform: PhotoTransform = {
+  scale: 1,
+  x: 0,
+  y: 0,
+};
+
 export interface CardData {
   id: string;
   userId: string | null;
@@ -15,6 +28,7 @@ export interface CardData {
   animated: boolean;
   format: "landscape" | "portrait";
   textConfig: TextConfig;
+  photoTransform?: PhotoTransform;
   createdAt: string;
 }
 

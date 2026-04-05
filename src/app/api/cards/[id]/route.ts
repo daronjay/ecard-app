@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import getDb from "@/lib/db";
-import { CardData } from "@/lib/types";
+import { CardData, defaultPhotoTransform } from "@/lib/types";
 
 export async function GET(
   _req: NextRequest,
@@ -16,6 +16,7 @@ export async function GET(
         text_config: string;
         animated: number;
         format: string;
+        photo_transform: string;
         created_at: string;
       }
     | undefined;
@@ -32,6 +33,7 @@ export async function GET(
     animated: !!row.animated,
     format: (row.format as "landscape" | "portrait") || "landscape",
     textConfig: JSON.parse(row.text_config),
+    photoTransform: row.photo_transform ? JSON.parse(row.photo_transform) : defaultPhotoTransform,
     createdAt: row.created_at,
   };
 

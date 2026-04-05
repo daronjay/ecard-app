@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CardPreview from "@/components/CardPreview";
-import { CardData, defaultTextConfig } from "@/lib/types";
+import { CardData, defaultTextConfig, defaultPhotoTransform } from "@/lib/types";
 
 export default function GalleryPage() {
   const { status } = useSession();
@@ -60,6 +60,7 @@ export default function GalleryPage() {
                   photoUrl={card.photoUrl}
                   textConfig={card.textConfig || defaultTextConfig}
                   animated={card.animated}
+                  photoTransform={card.photoTransform || defaultPhotoTransform}
                 />
                 <p className="text-xs text-zinc-500 mt-1">{card.createdAt}</p>
               </div>

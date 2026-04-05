@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import html2canvas from "html2canvas";
 import CardPreview from "@/components/CardPreview";
-import { CardData, defaultTextConfig } from "@/lib/types";
+import { CardData, defaultTextConfig, defaultPhotoTransform } from "@/lib/types";
 
 export default function CardPage() {
   const { id } = useParams();
@@ -74,6 +74,7 @@ export default function CardPage() {
         textConfig={card.textConfig || defaultTextConfig}
         animated={card.animated}
         format={card.format}
+        photoTransform={card.photoTransform || defaultPhotoTransform}
       />
       <div className="flex gap-3 mt-5 pb-8">
         <button

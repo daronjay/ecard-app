@@ -47,6 +47,11 @@ function migrate(db: Database.Database) {
       "ALTER TABLE cards ADD COLUMN format TEXT NOT NULL DEFAULT 'landscape'",
     );
   }
+  if (!cols.some((c) => c.name === "photo_transform")) {
+    db.exec(
+      "ALTER TABLE cards ADD COLUMN photo_transform TEXT NOT NULL DEFAULT '{\"scale\":1,\"x\":0,\"y\":0}'",
+    );
+  }
 }
 
 export default getDb;

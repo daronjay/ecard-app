@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
-import { TextConfig, defaultTextConfig } from "@/lib/types";
+import { TextConfig, defaultTextConfig, PhotoTransform, defaultPhotoTransform } from "@/lib/types";
 import { useDirty } from "@/lib/dirty-context";
 import CardPreview from "@/components/CardPreview";
 import PhotoUpload from "@/components/PhotoUpload";
@@ -23,6 +23,7 @@ export default function CreatePage() {
     ...defaultTextConfig,
     date: new Date().toISOString().split("T")[0],
   });
+  const [photoTransform, setPhotoTransform] = useState<PhotoTransform>(defaultPhotoTransform);
   const [saving, setSaving] = useState(false);
 
   const markDirty = () => setDirty(true);
@@ -64,6 +65,7 @@ export default function CreatePage() {
         textConfig,
         animated,
         format,
+        photoTransform,
       }),
     });
     const data = await res.json();
@@ -86,10 +88,42 @@ export default function CreatePage() {
             <PhotoUpload
               onUpload={(url) => {
                 setPhotoUrl(url);
+                setPhotoTransform(defaultPhotoTransform);
                 markDirty();
               }}
               currentUrl={photoUrl}
             />
+            {photoUrl && (
+              <div className="mt-3 space-y-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-stone-500 w-10 shrink-0">zoom</span>
+                  <input
+                    type="range"
+                    min={0.2}
+                    max={3}
+                    step={0.01}
+                    value={photoTransform.scale}
+                    onChange={(e) => {
+                      setPhotoTransform((t) => ({ ...t, scale: parseFloat(e.target.value) }));
+                      markDirty();
+                    }}
+                    className="flex-1 accent-stone-700"
+                  />
+                  <span className="text-xs text-stone-400 w-8 text-right tabular-nums">
+                    {photoTransform.scale.toFixed(2)}x
+                  </span>
+                </div>
+                <button
+                  onClick={() => {
+                    setPhotoTransform(defaultPhotoTransform);
+                    markDirty();
+                  }}
+                  className="text-xs text-stone-400 hover:text-stone-600 transition-colors"
+                >
+                  reset position
+                </button>
+              </div>
+            )}
           </section>
 
           <section>
@@ -183,6 +217,9 @@ export default function CreatePage() {
           <h2 className="text-xs font-semibold text-stone-500 uppercase tracking-widest mb-3">
             Preview
           </h2>
+          {photoUrl && (
+            <p className="text-xs text-stone-400 mb-2">drag photo to reposition · scroll to zoom</p>
+          )}
           <CardPreview
             ref={cardRef}
             template={template}
@@ -190,6 +227,11 @@ export default function CreatePage() {
             textConfig={textConfig}
             animated={animated}
             format={format}
+            photoTransform={photoTransform}
+            onPhotoTransformChange={(t) => {
+              setPhotoTransform(t);
+              markDirty();
+            }}
           />
         </div>
       </div>
