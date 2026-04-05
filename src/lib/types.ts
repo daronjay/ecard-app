@@ -13,6 +13,7 @@ export interface CardData {
   photoUrl: string | null;
   template: string;
   animated: boolean;
+  format: "landscape" | "portrait";
   textConfig: TextConfig;
   createdAt: string;
 }

@@ -15,6 +15,7 @@ export async function GET(
         template: string;
         text_config: string;
         animated: number;
+        format: string;
         created_at: string;
       }
     | undefined;
@@ -29,6 +30,7 @@ export async function GET(
     photoUrl: row.photo_url,
     template: row.template,
     animated: !!row.animated,
+    format: (row.format as "landscape" | "portrait") || "landscape",
     textConfig: JSON.parse(row.text_config),
     createdAt: row.created_at,
   };

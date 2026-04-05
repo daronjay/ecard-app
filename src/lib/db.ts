@@ -35,12 +35,17 @@ function migrate(db: Database.Database) {
     );
   `);
 
-  // add animated column if it doesn't exist yet
+  // add columns if they don't exist yet
   const cols = db.prepare("PRAGMA table_info(cards)").all() as Array<{
     name: string;
   }>;
   if (!cols.some((c) => c.name === "animated")) {
     db.exec("ALTER TABLE cards ADD COLUMN animated INTEGER NOT NULL DEFAULT 0");
+  }
+  if (!cols.some((c) => c.name === "format")) {
+    db.exec(
+      "ALTER TABLE cards ADD COLUMN format TEXT NOT NULL DEFAULT 'landscape'",
+    );
   }
 }
 

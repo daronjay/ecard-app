@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
   const db = getDb();
   db.prepare(
-    "INSERT INTO cards (id, user_id, photo_url, template, text_config, animated) VALUES (?, ?, ?, ?, ?, ?)",
+    "INSERT INTO cards (id, user_id, photo_url, template, text_config, animated, format) VALUES (?, ?, ?, ?, ?, ?, ?)",
   ).run(
     id,
     userId,
@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     body.template || "gradient-sunset",
     JSON.stringify(body.textConfig || {}),
     body.animated ? 1 : 0,
+    body.format === "portrait" ? "portrait" : "landscape",
   );
 
   return NextResponse.json({ id }, { status: 201 });
@@ -45,6 +46,7 @@ export async function GET() {
     template: string;
     text_config: string;
     animated: number;
+    format: string;
     created_at: string;
   }>;
 
@@ -54,6 +56,7 @@ export async function GET() {
     photoUrl: r.photo_url,
     template: r.template,
     animated: !!r.animated,
+    format: (r.format as "landscape" | "portrait") || "landscape",
     textConfig: JSON.parse(r.text_config),
     createdAt: r.created_at,
   }));
