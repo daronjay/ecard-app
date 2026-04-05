@@ -44,7 +44,7 @@ export default function CardPage() {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-zinc-400">{error}</p>
+        <p className="text-stone-400">{error}</p>
       </div>
     );
   }
@@ -52,30 +52,39 @@ export default function CardPage() {
   if (!card) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-zinc-400">loading...</p>
+        <p className="text-stone-400">loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-2xl mx-auto px-6 py-8">
+      <div className="flex items-center gap-3 mb-5">
+        <button
+          onClick={() => window.history.back()}
+          className="text-stone-400 hover:text-stone-700 text-sm transition-colors"
+        >
+          ← back
+        </button>
+      </div>
       <CardPreview
         ref={cardRef}
         template={card.template}
         photoUrl={card.photoUrl}
         textConfig={card.textConfig || defaultTextConfig}
         animated={card.animated}
+        format={card.format}
       />
-      <div className="flex gap-3 mt-4">
+      <div className="flex gap-3 mt-5 pb-8">
         <button
           onClick={handleDownload}
-          className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+          className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors shadow-sm"
         >
           Download
         </button>
         <button
           onClick={handleCopyLink}
-          className="flex-1 bg-zinc-700 hover:bg-zinc-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+          className="flex-1 bg-stone-800 hover:bg-stone-700 text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors shadow-sm"
         >
           {copied ? "copied!" : "Copy link"}
         </button>
