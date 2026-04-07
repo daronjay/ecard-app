@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useCallback, useEffect, useRef, MutableRefObject } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState, MutableRefObject } from "react";
 import { TextConfig, PhotoTransform, defaultPhotoTransform } from "@/lib/types";
 import { getTemplateStyles, getAnimClass } from "@/lib/templates";
 
@@ -27,6 +27,8 @@ interface Props {
   format?: "landscape" | "portrait";
   photoTransform?: PhotoTransform;
   onPhotoTransformChange?: (t: PhotoTransform) => void;
+  // new: file dropped directly onto the preview
+  onFileDrop?: (file: File) => void;
 }
 
 // forwardRef so parent can grab the DOM node for html2canvas
@@ -40,6 +42,7 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
       format = "landscape",
       photoTransform = defaultPhotoTransform,
       onPhotoTransformChange,
+      onFileDrop,
     },
     ref,
   ) => {
@@ -49,13 +52,14 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
     const fontFamily = textConfig.fontFamily || "Georgia";
     const fontSize = textConfig.fontSize ?? 1.0;
 
-    // ensure google font is loaded in preview too
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       loadGoogleFont(fontFamily);
     }, [fontFamily]);
 
-    // track pointer state for drag
+    // drag-over state for the drop highlight
+    const [dropHighlight, setDropHighlight] = useState(false);
+
+    // track pointer state for photo repositioning
     const dragState = useRef<{
       pointerId: number;
       startX: number;
@@ -64,9 +68,9 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
       startTy: number;
     } | null>(null);
 
-    // mutable so we can assign in the merged ref callback
     const containerRef = useRef<HTMLDivElement | null>(null) as MutableRefObject<HTMLDivElement | null>;
 
+    // --- photo repositioning (pointer events) ---
     const onPointerDown = useCallback(
       (e: React.PointerEvent) => {
         if (!onPhotoTransformChange) return;
@@ -87,11 +91,9 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
       (e: React.PointerEvent) => {
         if (!dragState.current || !onPhotoTransformChange || !containerRef.current) return;
         if (e.pointerId !== dragState.current.pointerId) return;
-
         const rect = containerRef.current.getBoundingClientRect();
         const dx = ((e.clientX - dragState.current.startX) / rect.width) * 100;
         const dy = ((e.clientY - dragState.current.startY) / rect.height) * 100;
-
         onPhotoTransformChange({
           ...photoTransform,
           x: dragState.current.startTx + dx,
@@ -116,20 +118,59 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
       [onPhotoTransformChange, photoTransform],
     );
 
+    // --- file drop onto the card (drag events, OS files) ---
+    const onDragOver = useCallback(
+      (e: React.DragEvent) => {
+        if (!onFileDrop) return;
+        // only accept files
+        if ([...e.dataTransfer.types].includes("Files")) {
+          e.preventDefault();
+          setDropHighlight(true);
+        }
+      },
+      [onFileDrop],
+    );
+
+    const onDragLeave = useCallback(() => {
+      setDropHighlight(false);
+    }, []);
+
+    const onDrop = useCallback(
+      (e: React.DragEvent) => {
+        e.preventDefault();
+        setDropHighlight(false);
+        if (!onFileDrop) return;
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+          onFileDrop(file);
+        }
+      },
+      [onFileDrop],
+    );
+
     const transform = `translate(${photoTransform.x}%, ${photoTransform.y}%) scale(${photoTransform.scale})`;
 
     return (
       <div
         ref={(node) => {
-          // merge refs — containerRef for drag math, external ref for html2canvas
           containerRef.current = node;
           if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
         }}
         className={`relative w-full ${aspectClass} rounded-xl overflow-hidden select-none ${animCls}`}
         style={styles}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
       >
-        {/* photo layer — draggable */}
+        {/* drop highlight overlay */}
+        {dropHighlight && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 pointer-events-none rounded-xl border-4 border-dashed border-white/80">
+            <span className="text-white text-sm font-semibold drop-shadow">Drop photo here</span>
+          </div>
+        )}
+
+        {/* photo layer — draggable to reposition */}
         {photoUrl && (
           <div
             className="absolute inset-0 flex items-center justify-center"
@@ -158,6 +199,13 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
                 userSelect: "none",
               }}
             />
+          </div>
+        )}
+
+        {/* no-photo hint */}
+        {!photoUrl && onFileDrop && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span className="text-white/40 text-sm">drop a photo here</span>
           </div>
         )}
 

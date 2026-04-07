@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
 import { TextConfig, defaultTextConfig, PhotoTransform, defaultPhotoTransform } from "@/lib/types";
@@ -27,6 +27,21 @@ export default function CreatePage() {
   const [saving, setSaving] = useState(false);
 
   const markDirty = () => setDirty(true);
+
+  // shared upload handler — used by both PhotoUpload and CardPreview drop
+  const handleUploadFile = useCallback(async (file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch("/api/upload", { method: "POST", body: fd });
+    const data = await res.json();
+    if (data.url) {
+      setPhotoUrl(data.url);
+      setPhotoTransform(defaultPhotoTransform);
+      markDirty();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // browser close/refresh guard
   useEffect(() => {
@@ -91,6 +106,7 @@ export default function CreatePage() {
                 setPhotoTransform(defaultPhotoTransform);
                 markDirty();
               }}
+              onFile={handleUploadFile}
               currentUrl={photoUrl}
             />
             {photoUrl && (
@@ -217,9 +233,9 @@ export default function CreatePage() {
           <h2 className="text-xs font-semibold text-stone-500 uppercase tracking-widest mb-3">
             Preview
           </h2>
-          {photoUrl && (
-            <p className="text-xs text-stone-400 mb-2">drag photo to reposition · scroll to zoom</p>
-          )}
+          <p className="text-xs text-stone-400 mb-2">
+            {photoUrl ? "drag photo to reposition · scroll to zoom" : "drop a photo directly onto the card"}
+          </p>
           <CardPreview
             ref={cardRef}
             template={template}
@@ -232,6 +248,7 @@ export default function CreatePage() {
               setPhotoTransform(t);
               markDirty();
             }}
+            onFileDrop={handleUploadFile}
           />
         </div>
       </div>

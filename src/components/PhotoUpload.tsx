@@ -5,15 +5,24 @@ import { useCallback, useState } from "react";
 interface Props {
   onUpload: (url: string) => void;
   currentUrl: string | null;
+  // optional: parent can supply a pre-built file handler (to share with card drop)
+  onFile?: (file: File) => Promise<void>;
 }
 
-export default function PhotoUpload({ onUpload, currentUrl }: Props) {
+export default function PhotoUpload({ onUpload, currentUrl, onFile }: Props) {
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   const handleFile = useCallback(
     async (file: File) => {
       if (!file.type.startsWith("image/")) return;
+      if (onFile) {
+        // parent handles upload; just show uploading state briefly
+        setUploading(true);
+        await onFile(file);
+        setUploading(false);
+        return;
+      }
       setUploading(true);
       const fd = new FormData();
       fd.append("file", file);
@@ -22,7 +31,7 @@ export default function PhotoUpload({ onUpload, currentUrl }: Props) {
       setUploading(false);
       if (data.url) onUpload(data.url);
     },
-    [onUpload],
+    [onFile, onUpload],
   );
 
   const onDrop = useCallback(
