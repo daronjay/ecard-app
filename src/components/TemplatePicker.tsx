@@ -16,20 +16,21 @@ export default function TemplatePicker({
   onToggleAnimated,
 }: Props) {
   return (
-    <div className="space-y-2">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-3">
+      <div className="grid grid-cols-5 gap-1.5 max-h-52 overflow-y-auto pr-1">
         {templates.map((t) => (
           <button
             key={t.id}
             onClick={() => onSelect(t.id)}
+            title={t.name}
             className={`
-              h-16 rounded-lg text-xs font-medium transition-all
-              ${selected === t.id ? "ring-2 ring-blue-400 scale-105" : "ring-1 ring-zinc-700 hover:ring-zinc-500"}
+              h-12 rounded-lg text-xs font-medium transition-all
+              ${selected === t.id ? "ring-2 ring-blue-400 scale-105 z-10 relative" : "ring-1 ring-zinc-700 hover:ring-zinc-500"}
               ${animated && selected === t.id ? getAnimClass(t.id) : ""}
             `}
             style={getTemplateStyles(t.id)}
           >
-            {t.name}
+            <span className="drop-shadow text-[10px]">{t.name}</span>
           </button>
         ))}
       </div>

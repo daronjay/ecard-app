@@ -73,3 +73,12 @@ body {
 .anim-confetti {
   animation: confetti-drift 8s linear infinite;
 }
+
+@keyframes stripe-move {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 40px 40px, 40px 40px, 0 0; }
+}
+
+.anim-stripe {
+  animation: stripe-move 2s linear infinite;
+}
