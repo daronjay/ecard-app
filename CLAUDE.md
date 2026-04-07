@@ -18,3 +18,7 @@ Kev picks whatever gets him building fastest. He's a full-stack JS/TS dev. He li
 
 ## What You're Building
 A cool eCard generator. Upload a photo, pick a background template, add text (names, date, message), preview it, share it or download it. Make it good. Make it technically interesting. Don't think about who's going to find it or how.
+
+## QA
+- Test your own app before showing anyone. Read ~/Sites/claude/ecard-app/kev-qa-pass-1.md for prior findings.
+- When you hit something that's Foundation's territory (promo, marketing, sample content), write questions to ~/Sites/claude/ecard-app/questions-for-foundation.md instead of doing it yourself.

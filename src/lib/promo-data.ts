@@ -1,13 +1,3 @@
-export interface PromoFeature {
-  id: string;
-  headline: string;
-  description: string;
-  benefitStatement: string;
-  ctaText: string;
-  // visual hint for the feature card (gradient or icon-like element)
-  accent: string;
-}
-
 export interface SocialPost {
   id: string;
   platform: "facebook" | "instagram";
@@ -16,88 +6,6 @@ export interface SocialPost {
   imageDescription: string;
   format?: "post" | "reel" | "carousel";
 }
-
-export const promoFeatures: PromoFeature[] = [
-  {
-    id: "card-editor",
-    headline: "Design Your Card in Real Time",
-    description:
-      "Watch your card come to life as you build it. Every change you make appears instantly in a live preview -- no guessing, no waiting.",
-    benefitStatement:
-      "So you always know exactly what you're sending before you send it.",
-    ctaText: "Start Creating",
-    accent: "from-blue-500 to-purple-600",
-  },
-  {
-    id: "photo-upload",
-    headline: "Make It Personal with Your Photos",
-    description:
-      "Drop in your favourite photo and it appears right on your card. Drag and drop or click to upload -- your photo, centred and styled with a subtle shadow.",
-    benefitStatement:
-      "Because the best cards have a story only your photos can tell.",
-    ctaText: "Upload a Photo",
-    accent: "from-pink-500 to-rose-600",
-  },
-  {
-    id: "background-templates",
-    headline: "Pick the Perfect Mood",
-    description:
-      "Choose from beautiful backgrounds -- warm sunset gradients, deep ocean tones, elegant midnight, or festive confetti. One click to completely change the feel. Toggle animated mode to bring your background to life with smooth motion.",
-    benefitStatement:
-      "So your card matches the moment, whether it's romantic, celebratory, or heartfelt -- static or animated.",
-    ctaText: "Browse Templates",
-    accent: "from-amber-500 to-orange-600",
-  },
-  {
-    id: "animated-backgrounds",
-    headline: "Backgrounds That Move",
-    description:
-      "Flip the animated switch and watch your card come alive. Sunset gradients shift, ocean hues pulse, midnight glows, and confetti drifts. Each template has its own animation style -- all pure CSS, no plugins.",
-    benefitStatement:
-      "Because a card that moves catches the eye in a way a static image never will.",
-    ctaText: "Try Animated",
-    accent: "from-red-500 to-amber-600",
-  },
-  {
-    id: "text-personalisation",
-    headline: "Say Exactly What You Mean",
-    description:
-      "Add names, dates, and a heartfelt message. Position your text just right with a simple slider. Every word shows up on the card as you type.",
-    benefitStatement:
-      "Because the right words in the right place make all the difference.",
-    ctaText: "Add Your Message",
-    accent: "from-emerald-500 to-teal-600",
-  },
-  {
-    id: "download-png",
-    headline: "Download and Keep Forever",
-    description:
-      "Export your card as a crisp, high-quality PNG image. Print it, email it, text it -- it's yours to use however you want.",
-    benefitStatement:
-      "So your card lives beyond the screen and goes wherever you need it.",
-    ctaText: "Download Free",
-    accent: "from-cyan-500 to-blue-600",
-  },
-  {
-    id: "save-and-share",
-    headline: "Share with a Single Link",
-    description:
-      "Save your card and get a unique link anyone can open. No account needed for the person receiving it -- just send the link and they see your card.",
-    benefitStatement:
-      "Because sharing something meaningful shouldn't be complicated.",
-    ctaText: "Save & Share",
-    accent: "from-violet-500 to-indigo-600",
-  },
-  {
-    id: "personal-gallery",
-    headline: "All Your Cards in One Place",
-    description:
-      "Sign up to keep a personal gallery of every card you've made. Come back anytime to re-download, re-share, or just reminisce.",
-    benefitStatement: "So you never lose a card or the memory behind it.",
-    ctaText: "View Gallery",
-    accent: "from-fuchsia-500 to-pink-600",
-  },
-];
 
 export const socialPosts: SocialPost[] = [
   // Facebook
