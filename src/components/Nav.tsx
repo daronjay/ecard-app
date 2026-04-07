@@ -25,8 +25,15 @@ export default function Nav() {
       <Link
         href="/"
         onClick={guardedNav("/")}
-        className="text-lg font-bold text-zinc-100"
+        className="flex items-center gap-2 text-lg font-bold text-zinc-100"
       >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="2.5" fill="#3b82f6"/>
+          <rect x="2" y="5" width="20" height="14" rx="2.5" stroke="#1d4ed8" strokeWidth="0.5"/>
+          <path d="M7 9.5 Q12 14 17 9.5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+          <circle cx="9" cy="9" r="1.5" fill="#fbbf24"/>
+          <circle cx="15" cy="9" r="1.5" fill="#34d399"/>
+        </svg>
         eCard
       </Link>
       <div className="flex items-center gap-4 text-sm">
