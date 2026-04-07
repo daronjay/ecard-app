@@ -5,6 +5,10 @@ export interface TextConfig {
   message: string;
   // position offsets as percentages (0-100) from top-left
   messageY: number;
+  // font choice — web-safe + a few Google Fonts we load on demand
+  fontFamily: string;
+  // scale multiplier for all text (0.6–2.0)
+  fontSize: number;
 }
 
 export interface PhotoTransform {
@@ -38,4 +42,6 @@ export const defaultTextConfig: TextConfig = {
   date: new Date().toISOString().split("T")[0],
   message: "Thinking of you!",
   messageY: 60,
+  fontFamily: "Georgia",
+  fontSize: 1.0,
 };

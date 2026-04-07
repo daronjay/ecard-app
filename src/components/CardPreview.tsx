@@ -1,8 +1,23 @@
 "use client";
 
-import { forwardRef, useCallback, useRef, MutableRefObject } from "react";
+import { forwardRef, useCallback, useEffect, useRef, MutableRefObject } from "react";
 import { TextConfig, PhotoTransform, defaultPhotoTransform } from "@/lib/types";
 import { getTemplateStyles, getAnimClass } from "@/lib/templates";
+
+const GOOGLE_FONTS_LOADED = new Set<string>();
+const GOOGLE_FONTS = new Set([
+  "Playfair Display","Dancing Script","Lobster","Pacifico",
+  "Montserrat","Raleway","Oswald","Bitter","Lora","Righteous",
+]);
+
+function loadGoogleFont(family: string) {
+  if (!GOOGLE_FONTS.has(family) || GOOGLE_FONTS_LOADED.has(family)) return;
+  GOOGLE_FONTS_LOADED.add(family);
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}:wght@400;700&display=swap`;
+  document.head.appendChild(link);
+}
 
 interface Props {
   template: string;
@@ -31,6 +46,14 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
     const styles = getTemplateStyles(template);
     const animCls = animated ? getAnimClass(template) : "";
     const aspectClass = format === "portrait" ? "aspect-[3/4]" : "aspect-[4/3]";
+    const fontFamily = textConfig.fontFamily || "Georgia";
+    const fontSize = textConfig.fontSize ?? 1.0;
+
+    // ensure google font is loaded in preview too
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      loadGoogleFont(fontFamily);
+    }, [fontFamily]);
 
     // track pointer state for drag
     const dragState = useRef<{
@@ -141,7 +164,10 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
         {/* recipient name - top */}
         {textConfig.recipientName && (
           <div className="absolute top-6 left-0 right-0 text-center pointer-events-none">
-            <span className="text-2xl font-bold drop-shadow-lg">
+            <span
+              className="font-bold drop-shadow-lg"
+              style={{ fontFamily, fontSize: `${1.5 * fontSize}rem` }}
+            >
               Dear {textConfig.recipientName}
             </span>
           </div>
@@ -153,7 +179,10 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
             className="absolute left-0 right-0 text-center px-8 pointer-events-none"
             style={{ top: `${textConfig.messageY}%` }}
           >
-            <p className="text-lg italic drop-shadow-lg">
+            <p
+              className="italic drop-shadow-lg"
+              style={{ fontFamily, fontSize: `${1.125 * fontSize}rem` }}
+            >
               {textConfig.message}
             </p>
           </div>
@@ -162,12 +191,18 @@ const CardPreview = forwardRef<HTMLDivElement, Props>(
         {/* sender + date - bottom */}
         <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
           {textConfig.senderName && (
-            <span className="text-sm drop-shadow-lg">
+            <span
+              className="drop-shadow-lg"
+              style={{ fontFamily, fontSize: `${0.875 * fontSize}rem` }}
+            >
               From {textConfig.senderName}
             </span>
           )}
           {textConfig.date && (
-            <span className="text-sm drop-shadow-lg ml-3 opacity-70">
+            <span
+              className="drop-shadow-lg ml-3 opacity-70"
+              style={{ fontFamily, fontSize: `${0.875 * fontSize}rem` }}
+            >
               {textConfig.date}
             </span>
           )}
