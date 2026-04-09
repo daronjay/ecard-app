@@ -1,41 +1,31 @@
 # Foundation — eCard App
 
 > This file is owned by Foundation. Do not edit manually.
-> Regenerated from: ~/.foundation/registry.json
-> Onboarding profile: design/strategy/stoker-onboarding-profile-ecard-app.md
+> Source: ~/.foundation/registry.json → briefing_placed_at
 
 ## Session start
 
-On session start, read the registry at ~/.foundation/registry.json.
-Dispatch a Stoker triage agent (sonnet, background) using the template
-at the Foundation data_dir (see ~/.foundation/config.json) under
-config/stoker-triage-prompt.md. Fill template variables from the
-registry entry and the most recent session note in the project's
-session_notes_dir. Present the hit list before starting work.
+The Foundation plugin handles session-start automatically via the SessionStart hook.
+It presents an interactive menu — follow the menu and wait for user selection.
 
-## Agent roles
-
-- **Stoker**: observer. Triages issues, watches agent work, tracks
-  changes into Foundation. Graduated trust: L0 silent → L1 flag →
-  L2 propose → L3 act. Current level for this project: 1 (flag).
-- **Fitter**: builds new features, integrations, greenfield work.
-  Dispatched by Stoker.
-- **Turner**: maintenance, cleanup, bug fixes, refactoring.
-  Dispatched by Stoker.
-- Stoker picks the agent type. The engineer approves the work.
-- Agent type vocabulary is internal to Foundation.
+If the plugin didn't fire (no menu in system-reminder), read `~/.foundation/log/handoff.json`
+for previous session context and ask the user what they'd like to work on.
 
 ## Firewalling
 
 - Agents working here CAN read: ~/Sites/ecard-app/
 - Agents working here CAN read: Foundation data at ~/Sites/claude/foundation/
-- Agents working here CANNOT read: ~/Sites/claude/ecard-app/ (Kev's firewalled notes)
+- Agents working here CANNOT read: ~/Sites/claude/ecard-app/ (firewalled)
 - The Kev persona (defined in project-root CLAUDE.md) is firewalled from Foundation internals
 
 ## Session end
 
-When wrapping up, run the following Foundation behaviours:
-- Run drift critique per Foundation data_dir design/plans/drift-critique-process.md
-- Write session note (per /session-note skill if available)
-- Update project spec (per /update-spec skill if available)
-- Run /wrap-up skill if available
+When wrapping up, run /wrap-up which handles:
+- Verification, session note, handoff file, ledger
+
+## Agent orientation
+
+Foundation data is distributed, not all in this repo.
+Read schemas at ~/.foundation/schemas/ before interpreting Foundation data structures.
+Read ~/.foundation/log/handoff.json for previous session context.
+See ~/.foundation/registry.json for project configuration.
